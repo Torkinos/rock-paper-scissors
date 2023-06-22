@@ -16,6 +16,10 @@
     border: 2px solid transparent;
 }
 
+.active {
+    border-width: 4px;
+}
+
 .amount {
     min-width: 64px;
     height: 64px;
@@ -34,7 +38,7 @@
 }
 
 .title {
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 500;
     line-height: 24px;
     color: $rps-white;

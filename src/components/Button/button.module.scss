@@ -25,3 +25,8 @@
     font-size: 12px;
     line-height: 16px;
 }
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

@@ -1,10 +1,11 @@
 import { FC, MouseEvent } from 'react';
 import styles from './bettingPositionCard.module.scss';
 import { hexToRGBA } from 'src/utils/hexToRGBA';
+import classNames from 'classnames';
 
 interface BettingPositionCardProps {
 	onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-	amount: number;
+	amount?: number;
 	title: string;
 	color: string;
 	isActive?: boolean;
@@ -17,24 +18,24 @@ export const BettingPositionCard: FC<BettingPositionCardProps> = ({
 	color,
 	isActive,
 }) => {
-	const activeColor = hexToRGBA(color, 100);
-	const inactiveColor = hexToRGBA(color, 75);
-
 	return (
 		<button
-			className={styles.bettingPositionCard}
+			className={classNames(
+				styles.bettingPositionCard,
+				isActive && styles.active
+			)}
 			onClick={onClick}
 			style={{
-				backgroundColor: hexToRGBA(color, 60),
-				borderColor: isActive ? activeColor : inactiveColor,
+				backgroundColor: hexToRGBA(color, isActive ? 65 : 50),
+				borderColor: hexToRGBA(color, isActive ? 100 : 75),
 			}}
 		>
-			{amount && <div className={styles.amount}>{amount}</div>}
+			{!!amount && <div className={styles.amount}>{amount}</div>}
 
 			<div
 				className={styles.title}
 				style={{
-					color: isActive ? activeColor : inactiveColor,
+					color: hexToRGBA(color, isActive ? 100 : 75),
 				}}
 			>
 				{title}
