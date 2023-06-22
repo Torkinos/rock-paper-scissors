@@ -7,12 +7,12 @@ import { WINING_RATE_FOR_BET } from 'src/constants/winningRateForBet';
 import { Stage } from './enums/stage.enum';
 import { BETTING_POSITIONS } from 'src/constants/bettingPositions';
 import { INITIAL_BALANCE } from 'src/constants/initialBalance';
-import styles from './app.module.scss';
 import { Button } from 'src/components/Button';
 import { TopBar } from 'src/components/TopBar';
 import { BettingPositionCard } from 'src/components/BettingPositionCard';
-import { getIsPlayerWinner } from './utils/getIsPlayerWinner';
 import { getPlayerChoicesCount } from './utils/getPlayerChoicesCount';
+import { ButtonType } from 'src/components/Button/enums/buttonType.enum';
+import styles from './app.module.scss';
 
 export const App: FC = () => {
 	const [balance, setBalance] = useState(INITIAL_BALANCE);
@@ -68,33 +68,39 @@ export const App: FC = () => {
 	) => {
 		let winnings = 0;
 
+		if (playerChoiceParam === computerChoiceParam) {
+			winnings += totalBet;
+
+			setResult(Result.TIE);
+
+			setStage(Stage.RESULT);
+
+			setWinAmount(winnings);
+
+			return;
+		}
+
+		const isPlayerPositionWinner =
+			BETTING_POSITIONS[playerChoiceParam].winsAgainst.includes(
+				computerChoiceParam
+			);
+
+		const winningChoice = isPlayerPositionWinner
+			? playerChoiceParam
+			: computerChoiceParam;
+
 		Object.entries(bettings).forEach(([betting, betAmount]) => {
 			const bettingChoice = betting as keyof typeof bettings;
+			const playerChoicesCount = getPlayerChoicesCount(bettings);
 
-			if (playerChoiceParam === computerChoiceParam) {
-				winnings += totalBet;
-
-				setResult(Result.TIE);
-			} else if (
-				getIsPlayerWinner({
-					playerChoice: playerChoiceParam,
-					computerChoice: computerChoiceParam,
-					bettingChoice,
-				})
-			) {
-				const playerChoicesCount = getPlayerChoicesCount(bettings);
-
+			if (bettingChoice === winningChoice) {
 				winnings += WINING_RATE_FOR_BET[playerChoicesCount] * betAmount;
-
-				setResult(Result.WIN);
-
-				setWinningPosition(bettingChoice);
-			} else {
-				setResult(Result.LOSE);
-
-				setWinningPosition(computerChoiceParam);
 			}
 		});
+
+		setResult(winnings > 0 ? Result.WIN : Result.LOSE);
+
+		setWinningPosition(winningChoice);
 
 		setStage(Stage.RESULT);
 
@@ -112,7 +118,10 @@ export const App: FC = () => {
 			BETTING_POSITIONS
 		) as (keyof typeof BETTING_POSITIONS)[];
 
-		const randomChoice = bettingPositionKeys[Math.floor(Math.random() * 3)];
+		const randomChoice =
+			bettingPositionKeys[
+				Math.floor(Math.random() * bettingPositionKeys.length)
+			];
 
 		setComputerChoice(randomChoice);
 
@@ -120,7 +129,7 @@ export const App: FC = () => {
 
 		setTimeout(() => {
 			onResult(playerChoice, randomChoice);
-		}, 1000);
+		}, 1500);
 	};
 
 	const onIncrease = (choice: Position) => {
@@ -191,42 +200,52 @@ export const App: FC = () => {
 				winAmount={totalWinAmount}
 			/>
 
-			{stage === Stage.BETTING && (
-				<div className={styles.bettingMessage}>Pick your positions</div>
-			)}
+			<div className={styles.gameArea}>
+				{stage === Stage.PLAY && (
+					<div className={styles.playStage}>
+						{playerChoice}
 
-			{stage === Stage.PLAY && (
-				<div className={styles.playStage}>
-					{playerChoice}&nbsp;<span>vs</span>&nbsp;{computerChoice}
-				</div>
-			)}
+						<span>vs</span>
 
-			{stage === Stage.RESULT && (
-				<div className={styles.resultStage}>
-					{winningPosition && (
-						<div
-							className={styles.winningPosition}
-							style={{ color: BETTING_POSITIONS[winningPosition].color }}
-						>
-							{winningPosition} won
-						</div>
-					)}
+						{computerChoice}
+					</div>
+				)}
 
-					{result === Result.WIN && (
-						<div className={styles.resultMessage}>You win {winAmount}!</div>
-					)}
+				{stage === Stage.RESULT && (
+					<>
+						{winningPosition && (
+							<div
+								className={styles.winningPosition}
+								style={{ color: BETTING_POSITIONS[winningPosition].color }}
+							>
+								{winningPosition} won
+							</div>
+						)}
 
-					{result === Result.LOSE && (
-						<div className={styles.resultMessage}>You lose!</div>
-					)}
+						{result === Result.WIN && (
+							<div className={styles.resultMessage}>
+								You win <span>{winAmount}</span>!
+							</div>
+						)}
 
-					{result === Result.TIE && (
-						<div className={styles.resultMessage}>It is a tie!</div>
-					)}
-				</div>
-			)}
+						{result === Result.LOSE && (
+							<div className={styles.resultMessage}>
+								You lost <span>{totalBet}</span>!
+							</div>
+						)}
 
-			<ul className={styles.positions}>
+						{result === Result.TIE && (
+							<div className={styles.resultMessage}>It is a tie!</div>
+						)}
+					</>
+				)}
+
+				{stage === Stage.BETTING && (
+					<div className={styles.bettingMessage}>Pick your positions</div>
+				)}
+			</div>
+
+			<ul className={styles.positionsArea}>
 				{Object.entries(BETTING_POSITIONS).map(([key, bettingPosition]) => {
 					const choice = key as keyof typeof BETTING_POSITIONS;
 
@@ -235,11 +254,21 @@ export const App: FC = () => {
 					return (
 						<li key={choice} className={styles.position}>
 							<div className={styles.betAmount}>
-								<Button onClick={() => onDecrease(choice)}>-</Button>
+								<Button
+									type={ButtonType.DENCE}
+									onClick={() => onDecrease(choice)}
+								>
+									-
+								</Button>
 								&nbsp;
-								{BET_STEP}
+								<span>{BET_STEP}</span>
 								&nbsp;
-								<Button onClick={() => onIncrease(choice)}>+</Button>
+								<Button
+									type={ButtonType.DENCE}
+									onClick={() => onIncrease(choice)}
+								>
+									+
+								</Button>
 							</div>
 
 							<BettingPositionCard
@@ -254,15 +283,17 @@ export const App: FC = () => {
 				})}
 			</ul>
 
-			{stage === Stage.BETTING && (
-				<Button isDisabled={totalBet === 0 || !playerChoice} onClick={onPlay}>
-					Play
-				</Button>
-			)}
+			<div className={styles.buttonWrapper}>
+				{stage === Stage.BETTING && (
+					<Button isDisabled={totalBet === 0 || !playerChoice} onClick={onPlay}>
+						Play
+					</Button>
+				)}
 
-			{stage === Stage.RESULT && (
-				<Button onClick={onPlayAgain}>Play again</Button>
-			)}
+				{stage === Stage.RESULT && (
+					<Button onClick={onPlayAgain}>Play again</Button>
+				)}
+			</div>
 		</div>
 	);
 };

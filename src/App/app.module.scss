@@ -1,3 +1,97 @@
+@import 'src/styles/variables.scss';
+
 .app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 64px;
+    background: linear-gradient(180deg, $rps-gray 0%, $rps-black 100%);
+}
+
+.bettingMessage {
+    color: $rps-gold;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    margin:  auto auto 0 auto;
+    text-transform: uppercase;
+}
+
+.gameArea {
+    height: 33vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.playStage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    font-weight: 700;
+    color: $rps-white;
+    text-transform: uppercase;
+
+    span {
+        margin: 0 32px;
+        font-size: 48px;
+        color: $rps-gold;
+    }
+}
+
+.winningPosition {
+    font-size: 64px;
+    text-transform: uppercase;
+    color: $rps-gold;
+}
+
+.resultMessage {
+    font-size: 48px;
+    text-transform: uppercase;
+    color: $rps-gold;
+    margin-top: 24px;
     
+    span {
+        color: $rps-white;
+    }
+}
+
+.positionsArea {
+    height: 33vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-self: flex-end;
+}
+
+.position {
+    display: flex;
+    flex-direction: column;
+    margin: 24px;
+}
+
+.betAmount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+
+    span {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 18px;
+        color: $rps-gold;
+        padding: 0 16px;
+    }
+}
+
+.buttonWrapper {
+    margin-top: auto;
+    height: 10vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }

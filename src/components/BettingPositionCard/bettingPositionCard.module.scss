@@ -1,8 +1,8 @@
 @import 'src/styles/variables.scss';
 
 .bettingPositionCard {
-    width: 248px;
-    height: 248px;
+    width: 200px;
+    height: 160px;
     border-radius: 24px;
     background-color: $rps-black;
     padding: 16px;
@@ -10,7 +10,6 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    margin: 8px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     border: 2px solid transparent;
@@ -21,12 +20,12 @@
 }
 
 .amount {
-    min-width: 64px;
-    height: 64px;
-    border-radius: 32px;
-    font-size: 22px;
+    min-width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 16px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 18px;
     color: $rps-black;
     background-color: $rps-white;
     display: flex;
