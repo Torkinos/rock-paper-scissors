@@ -6,3 +6,14 @@ $rps-red: #E31542;
 $rps-green: #16C359;
 $rps-gold: #D4B37F;
 $rps-gray: #494949;
+
+
+:export {
+    rpcBlack: $rps-black;
+    rpcWhite: $rps-white;
+    rpcBlue: $rps-blue;
+    rpcRed: $rps-red;
+    rpcGreen: $rps-green;
+    rpcGold: $rps-gold;
+    rpcGray: $rps-gray;
+}
