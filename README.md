@@ -25,7 +25,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Before you start, make sure you have a recent version of Node.js and NPM installed.
 
 Clone the repository:
-git clone git@github.com:Torkinos/rock-paper-scissors.git
+### `git clone git@github.com:Torkinos/rock-paper-scissors.git`
 
 Navigate to the project directory:
 ### `cd rock-paper-scissors`
