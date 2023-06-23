@@ -55,7 +55,9 @@ export const App: FC = () => {
 
 		setBettings({});
 
-		setBalance((prevstate) => prevstate + winAmount);
+		if (result !== Result.TIE) {
+			setBalance((prevstate) => prevstate + winAmount);
+		}
 
 		setTotalWinAmount((prevstate) => prevstate + winAmount);
 
@@ -260,9 +262,9 @@ export const App: FC = () => {
 								>
 									-
 								</Button>
-								&nbsp;
+
 								<span>{BET_STEP}</span>
-								&nbsp;
+
 								<Button
 									type={ButtonType.DENCE}
 									onClick={() => onIncrease(choice)}
@@ -284,11 +286,7 @@ export const App: FC = () => {
 			</ul>
 
 			<div className={styles.buttonWrapper}>
-				{stage === Stage.BETTING && (
-					<Button isDisabled={totalBet === 0 || !playerChoice} onClick={onPlay}>
-						Play
-					</Button>
-				)}
+				{stage === Stage.BETTING && <Button onClick={onPlay}>Play</Button>}
 
 				{stage === Stage.RESULT && (
 					<Button onClick={onPlayAgain}>Play again</Button>

@@ -1,4 +1,5 @@
 @import 'src/styles/variables.scss';
+@import 'src/styles/mixins.scss';
 
 .bettingPositionCard {
     width: 200px;
@@ -13,6 +14,14 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     border: 2px solid transparent;
+
+    @include mobile {
+        width: 100%;
+        height: 64px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .active {
@@ -34,12 +43,24 @@
     margin-bottom: 16px;
     padding: 0 4px;
     border: 2px solid $rps-blue;
+
+    @include mobile {
+        min-width: 32px;
+        height: 32px;
+        margin-bottom: 0;
+        margin-right: 16px;
+    }
 }
 
 .title {
     font-size: 32px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 36px;
     color: $rps-white;
     text-transform: uppercase;
+
+    @include mobile {
+        font-size: 24px;
+        line-height: 28px;
+    }
 }

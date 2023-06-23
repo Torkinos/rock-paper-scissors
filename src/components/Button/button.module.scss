@@ -1,4 +1,5 @@
 @import 'src/styles/variables.scss';
+@import 'src/styles/mixins.scss';
 
 .button {
     height: 96px;
@@ -15,6 +16,15 @@
     align-items: center;
     border: 1px solid $rps-gold;
     text-transform: uppercase;
+
+    @include mobile {
+        height: 64px;
+        min-width: 64px;
+        border-radius: 32px;
+        padding: 0 32px;
+        font-size: 32px;
+        line-height: 40px;
+    }
 }
 
 .dence {
@@ -24,6 +34,14 @@
     padding: 0 4px;
     font-size: 24px;
     line-height: 28px;
+
+    @include mobile {
+        height: 32px;
+        min-width: 32px;
+        border-radius: 16px;
+        font-size: 16px;
+        line-height: 20px;
+    }
 }
 
 .disabled {
