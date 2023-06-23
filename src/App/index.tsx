@@ -55,11 +55,11 @@ export const App: FC = () => {
 
 		setBettings({});
 
-		if (result !== Result.TIE) {
-			setBalance((prevstate) => prevstate + winAmount);
-		}
+		setBalance((prevstate) => prevstate + winAmount);
 
-		setTotalWinAmount((prevstate) => prevstate + winAmount);
+		if (result !== Result.TIE) {
+			setTotalWinAmount((prevstate) => prevstate + winAmount);
+		}
 
 		setStage(Stage.BETTING);
 	};

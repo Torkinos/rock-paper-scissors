@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding-bottom: 64px;
     background: linear-gradient(180deg, $rps-gray 0%, $rps-black 100%);
 }
 
@@ -20,14 +19,15 @@
 }
 
 .gameArea {
-    height: 33vh;
+    height: calc(40vh - $topbar-height-desktop);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     @include mobile {
-        height: 20vh;
+        height: calc(30vh - $topbar-height-desktop);
+        height: calc(30svh - $topbar-height-desktop);
     }
 }
 
@@ -83,14 +83,15 @@
 }
 
 .positionsArea {
-    height: 33vh;
+    min-height: 30vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     justify-self: flex-end;
 
     @include mobile {
-        height: 50vh;
+        min-height: 50vh;
+        min-height: 50svh;
         flex-direction: column;
         flex-wrap: nowrap;
         padding: 0 16px;
@@ -135,8 +136,14 @@
 
 .buttonWrapper {
     margin-top: auto;
-    height: 10vh;
+    height: 30vh;
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    padding-bottom: 64px;
+
+    @include mobile {
+        height: 20vh;
+        height: 20svh;
+    }
 }
