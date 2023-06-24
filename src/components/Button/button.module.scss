@@ -31,9 +31,9 @@
     height: 40px;
     min-width: 40px;
     border-radius: 20px;
-    padding: 0 4px;
-    font-size: 24px;
-    line-height: 28px;
+    padding: 0 8px;
+    font-size: 22px;
+    line-height: 1;
 
     @include mobile {
         height: 32px;
