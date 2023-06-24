@@ -26,8 +26,8 @@ export const BettingPositionCard: FC<BettingPositionCardProps> = ({
 			)}
 			onClick={onClick}
 			style={{
-				backgroundColor: hexToRGBA(color, isActive ? 65 : 50),
-				borderColor: hexToRGBA(color, isActive ? 100 : 75),
+				backgroundColor: hexToRGBA(color, isActive ? 60 : 30),
+				borderColor: hexToRGBA(color, isActive ? 100 : 50),
 			}}
 		>
 			{!!amount && <div className={styles.amount}>{amount}</div>}
@@ -35,7 +35,7 @@ export const BettingPositionCard: FC<BettingPositionCardProps> = ({
 			<div
 				className={styles.title}
 				style={{
-					color: hexToRGBA(color, isActive ? 100 : 75),
+					color: hexToRGBA(color, isActive ? 100 : 50),
 				}}
 			>
 				{title}
